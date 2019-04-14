@@ -1,0 +1,432 @@
+/**********************************
+*********** MAIN ELEMENTS *********
+**********************************/
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'NeueHaasGroteskRegular', Helvetica, Arial, sans-serif !important;
+    font-size: 1em;
+    font-family: sans-serif;
+    background: #f2f2f2;
+    color: #000 !important;
+}
+
+h1, h2, h3 {
+    text-align:center;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+    transition: 0.2s ease-in-out 0s;
+}
+
+a:hover {
+    color: rgb(53, 234, 165);
+}
+
+p {
+    background: none;
+}
+
+*:focus { /* bordure input chrome */
+    outline: none;
+}
+
+/**********************************
+************** ADMIN **************
+**********************************/
+
+
+#container {
+    padding-top: 150px;  
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    border-bottom: 4px solid #EEE;
+    font-family: 'NeueHaasGroteskBold', Helvetica, Arial, sans-serif !important;
+    z-index: 1000;   
+}
+
+h1 {
+    font-family: 'NeueHaasGroteskBold', helvetica, Arial, sans-serif;
+    font-size: 3em;
+    margin: 0
+}
+
+header a:hover {
+   color: #000;
+}
+
+header nav {
+    position: fixed;
+    right: 0;
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    width: 300px;
+    justify-content: center;
+}
+
+header #btn_site {
+    display: flex;
+    background: rgb(53, 234, 165);
+    border-radius: 70px;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 30px;
+    margin: 8px;
+    transition: 0.3s ease-in-out 0s;
+}
+
+header #btn_logout {
+    display: flex;
+    background: rgb(53, 234, 165);
+    border-radius: 70px;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    margin: 8px;
+    transition: 0.3s ease-in-out 0s;
+}
+
+#btn_site:hover,
+#btn_logout:hover{
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,0.26), 0 10px 20px 0 rgba(0,0,0,0.19);
+    -webkit-box-shadow: 0 6px 6px 0 rgba(0,0,0,0.26), 0 10px 20px 0 rgba(0,0,0,0.19);
+}
+
+@media all and (max-width: 768px)
+{
+	h1 {
+        font-family: 'NeueHaasGroteskBold', helvetica, Arial, sans-serif;
+        font-size: 2.5em;
+        margin: 0;
+    }
+
+    header {
+        height: 120px;
+    }
+}
+
+
+/************ tinyMCE ************/
+
+.admin_post_form {
+    display: block;
+    width:100%;
+    margin:auto;
+    background: #fff;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+
+
+.admin_post_title {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    background: #fff;
+    color:#000;
+    font-family: 'NeueHaasGroteskThin', helvetica, Arial, sans-serif;
+    font-size: 2.5em;
+    border-radius: 0px;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+.admin_post_title::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #000;
+    opacity: 1 !important;
+}
+.admin_post_title::-moz-placeholder { /* Firefox 19+ */
+    color: #000;
+    opacity: 1 !important;
+}
+.admin_post_title:-ms-input-placeholder { /* IE 10+ */
+    color: #000;
+    opacity: 1 !important;
+}
+.admin_post_title:-moz-placeholder { /* Firefox 18- */
+    color: #000;
+    opacity: 1 !important;
+}
+
+.admin_post_title:focus::-webkit-input-placeholder { opacity: 0 !important; } /* Chrome 56, Safari 9 */
+.admin_post_title:focus:-moz-placeholder { opacity: 0 !important; } /* FF 4-18 */
+.admin_post_title:focus::-moz-placeholder { opacity: 0 !important; } /* FF 19-50 */
+.admin_post_title:focus:-ms-input-placeholder { opacity: 0 !important; } /* IE 10+ */
+.admin_post_title:focus::placeholder { opacity: 0 !important; } /* Modern Browsers */
+
+#btn_post, #btn_cancel, #btn_login {
+    display: inline-block;
+    margin: 30px 0 30px 0;
+    padding: 15px;
+    padding-left: 50px;
+    padding-right: 50px;
+    color: #000;
+    background: rgb(53, 234, 165);
+    font-family: 'NeueHaasGroteskBold', Helvetica, Arial, sans-serif;
+    font-size: 2.5em;
+    border-radius: 5px;
+    border: 0px solid #000;
+    border-radius: 70px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out 0s;
+}
+
+#btn_cancel {
+    background: #F2F2F2;
+    margin-left: 15px;
+}
+
+#btn_post:hover,
+#btn_cancel:hover,
+#btn_login:hover {
+    box-shadow: 0 6px 6px 0 rgba(0,0,0,0.26), 0 10px 20px 0 rgba(0,0,0,0.19);
+    -webkit-box-shadow: 0 6px 6px 0 rgba(0,0,0,0.26), 0 10px 20px 0 rgba(0,0,0,0.19);
+}
+
+.tox .tox-toolbar__group:not(:last-of-type) {
+    border: 0 !important;
+}
+
+.tox-edit-area {
+    background: white !important;
+}
+
+.tox .tox-edit-area__iframe {
+    background: #f2f2f2 !important;
+    border: 4px solid #f2f2f2 !important;
+    border-radius: 20px !important
+}
+
+.tox-tinymce {
+    padding: 0 20px 0 20px !important;
+    background: #fff !important;
+    border: 0 !important;
+}
+
+.tox .tox-edit-area {
+    border: 0 !important;
+}
+
+.tox .tox-statusbar {
+    border: 0 !important;
+}
+
+#post_content {
+    font-family: 'NeueHaasGroteskBold', Helvetica, Arial, sans-serif;
+    font-size: 1.5em;
+}
+
+.mce-content-body img[data-mce-selected], .mce-content-body table[data-mce-selected]{
+    max-width: 10% !important;
+    height: auto !important;
+} 
+
+.mce-content-body img {
+    max-width: 10% !important;
+    height: auto !important;
+} 
+
+
+.tox .tox-tbtn:hover {
+    background: rgb(53, 234, 165) !important;
+}
+
+.tox .tox-collection--list .tox-collection__item--active {
+    background: rgb(53, 234, 165) !important;
+}
+
+@media all and (max-width: 768px)
+{
+	#btn_post, #btn_cancel {
+        font-size: 1.5em;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+/************** top influencers *************/
+
+#top_influencers_container {
+    width: 100%;
+    font-family: 'NeueHaasGroteskMedium', Helvetica, Arial, sans-serif;
+    display: flex;
+}
+
+.top_influencer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+}
+
+.profile_picture {
+    overflow:hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.profile_picture img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+/************ section ************/
+
+#posts_container {
+    width: 100%;
+    font-family: 'NeueHaasGroteskMedium', Helvetica, Arial, sans-serif;
+}
+
+.post {
+    width: 600px;
+    margin: auto;
+    background: #fff;
+    font-family: 'NeueHaasGroteskMedium', Helvetica, Arial, sans-serif;
+    border: 1px solid #EFEFEF;
+    border-radius: 3px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.post img {
+    width: 100% !important;
+    height: auto !important;
+}
+
+.post_header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px; 
+    padding-bottom: 0px;
+}
+
+.control {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+    width: 10px;
+}
+
+.control_list {
+    display: none;
+    opacity: 0;
+    position: absolute;
+    top: 50px;
+    right: -10px;
+    width: 150px;
+    background: #fff;
+    text-align: left;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+    border-radius: 3px;
+}
+
+.control_list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.control_list li {
+    padding: 10px 10px 0 10px;
+}
+
+.control_list .fas {
+    width: 30px;
+}
+
+.post_event_details {
+    margin: 15px;
+    border-top: 1px solid #EFEFEF;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@media all and (max-width: 768px)
+{
+
+}
+
+
+
+/**********************************
+************ LOGIN PAGE ***********
+**********************************/
+
+#login_form {
+    padding-top: 100px;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: auto;
+    align-items: center;
+}
+
+form #username,
+form #password {
+    width: 100%;
+    background: #fff;
+    border: 4px solid #fff;
+    border-radius: 70px;
+    font-size: 2em;
+    margin: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+#error_login {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgb(53, 234, 165);
+    text-align: center;
+    padding: 15px;
+    font-size: 2.5em;
+    font-family: 'NeueHaasGroteskBold', Helvetica, Arial, sans-serif;
+}
+
+@media all and (max-width: 768px)
+{   
+    #login_form {
+        width: 90%;
+    }
+    
+	form #username,
+    form #password {
+        font-size: 1.5em;
+        -webkit-appearance: none;
+    }
+
+    #error_login {
+        font-size: 1.5em;
+    }
+}
+
+@media all and (max-width: 768px)
+{
+	#btn_login {
+        font-size: 1.5em;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
