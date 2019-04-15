@@ -7,6 +7,7 @@ require_once('model/InstagramAPI.php');
 require_once('model/Manager.php');
 require_once('model/InfluencerManager.php');
 
+
 function getLoginURL()
 {   
     // Get the API instagram settings
@@ -26,13 +27,14 @@ function getCallback($code)
     // Check if user is already registered
     $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
     $influencerRegistered = $influencerManager->checkInfluencer($data['user']['id']);
+    
 
     if ($influencerRegistered ) {
         session_start();
         $_SESSION['instagram_id'] = $data['user']['id'];
+        $_SESSION['id'] = $influencerRegistered['id'];
         // redirect to the profile page
-        header('Location: influencers.php?action=profile&id=' . $data['user']['id']);
-        echo $influencerRegistered;
+        header('Location: influencers.php?action=profile&id=' . $influencerRegistered['id']);
     }
     else { // Else register the user in db
         // Get nb followers (JSON link)
@@ -44,8 +46,9 @@ function getCallback($code)
 
         session_start();
         $_SESSION['instagram_id'] = $data['user']['id'];
+        $_SESSION['id'] = $data['user']['id'];
         // redirect to the profile page
-        header('Location: influencers.php?action=profile&id=' . $data['user']['id']);
+        header('Location: influencers.php?action=profile&id=' . $influencer['id']);
     }
 }
 
@@ -59,24 +62,24 @@ function logout()
     header('Location: influencers.php');
 }
 
-function influencerProfile($insta_id)
+function influencerProfile($influencer_id)
 {           
     // Get Profile details
     $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
-    $influencer = $influencerManager->getInfluencerProfile($insta_id);
+    $influencer = $influencerManager->getInfluencerProfile($influencer_id);
 
     $categories = $influencerManager->getCategories();
-    $CategoriesChecked[] = $influencerManager->getCategoriesChecked($influencer['id']);
+    $CategoriesChecked = $influencerManager->checkCategories($influencer['id']);
 
     require('view/frontend/influencerProfileView.php');    
 }
 
-function updateInfluencerProfile($insta_id, $fullname, $email, $birthdate, $town, $category_id)
+function updateInfluencerProfile($influencer_id, $fullname, $email, $birthdate, $town, $category_id)
 {           
     // Get Profile details
     $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
-    $influencer = $influencerManager->getInfluencerProfile($insta_id);
-    $influencerManager->influencerProfileToUpdate($insta_id, $fullname, $email, $birthdate, $town);
+    $influencer = $influencerManager->getInfluencerProfile($influencer_id);
+    $influencerManager->influencerProfileToUpdate($influencer_id, $fullname, $email, $birthdate, $town);
     $categories = $influencerManager->getCategories();
     
     // delete data in table categories_relationship

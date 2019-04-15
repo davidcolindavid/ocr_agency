@@ -20,9 +20,9 @@
 				Age: <?= htmlspecialchars($influencer['age']) ?><br /><br />
 			</div>
 			
-			<a href="influencers.php?action=editProfile&amp;id=<?= htmlspecialchars($influencer['instagram_id']) ?>">éditer</a>
+			<a href="influencers.php?action=editProfile&amp;id=<?= htmlspecialchars($influencer['id']) ?>">éditer</a>
 
-			<form class="row comment_form" action="influencers.php?action=updateProfile&amp;id=<?= htmlspecialchars($influencer['instagram_id']) ?>" method="post">
+			<form class="row comment_form" action="influencers.php?action=updateProfile&amp;id=<?= htmlspecialchars($influencer['id']) ?>" method="post">
 				<!-- details -->
 				<div class="col-lg-6">
 				<label for="fullname">Nom:</label>
@@ -58,6 +58,22 @@
 					<button id="btn_send">mettre à jour</button>
 				</div>
 			</form>
+			
+			<!-- posts list -->
+			<?php/*
+            while ($post = $posts->fetch())
+            {
+			?>
+                <div class="title"><?= $post['title'] ?></div>
+				<div class="post_date">Posté le <?= $post['creation_date_fr'] ?></div>
+				<div class="post_content"><?= $post['content'] ?></div>
+				<div class="date"><i class="far fa-clock"></i><?= $post['date_event'] ?></div>
+                <div class="place"><i class="fas fa-map-marker-alt"></i><?= $post['place'] ?> - <?= $post['address_event'] ?></div>
+            <?php
+            }
+            $posts->closeCursor();
+			*/?> 
+			
 
 
 

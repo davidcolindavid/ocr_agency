@@ -27,7 +27,7 @@ class AdminPostManager extends Manager
     public function getPostAndCategories($postId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM ag_posts LEFT JOIN ag_categories_relationship ON ag_posts.id = ag_categories_relationship.post_id WHERE ag_posts.id = ?');
+        $req = $db->prepare('SELECT * FROM ag_posts LEFT JOIN ag_posts_categories ON ag_posts.id = ag_posts_categories.post_id WHERE ag_posts.id = ?');
         $req->execute(array($postId));
         $post = $req->fetch();
 
@@ -70,7 +70,7 @@ class AdminPostManager extends Manager
     public function postAndCategoriesToDelete($postId)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('DELETE ag_posts, ag_categories_relationship FROM ag_posts INNER JOIN ag_categories_relationship ON ag_posts.id = ag_categories_relationship.post_id WHERE ag_posts.id = ?');
+        $req = $db->prepare('DELETE ag_posts, ag_posts_categories FROM ag_posts INNER JOIN ag_posts_categories ON ag_posts.id = ag_posts_categories.post_id WHERE ag_posts.id = ?');
         $affectedLines = $req->execute(array($postId)); 
 
         return $affectedLines;
@@ -106,7 +106,7 @@ class AdminPostManager extends Manager
     public function addCategoriesRelationship($post_id, $category_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO ag_categories_relationship SET post_id = ?, category_id = ?');
+        $req = $db->prepare('INSERT INTO ag_posts_categories SET post_id = ?, category_id = ?');
         $affectedLines = $req->execute(array($post_id, $category_id)); 
 
         return $affectedLines;
@@ -115,7 +115,7 @@ class AdminPostManager extends Manager
     public function deleteCategoriesRelationship($post_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('DELETE FROM ag_categories_relationship WHERE post_id = ?');
+        $req = $db->prepare('DELETE FROM ag_posts_categories WHERE post_id = ?');
         $affectedLines = $req->execute(array($post_id)); 
 
         return $affectedLines;
@@ -124,7 +124,7 @@ class AdminPostManager extends Manager
     public function getCategoriesChecked($post_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT category_id FROM ag_categories_relationship WHERE post_id = ?');
+        $req = $db->prepare('SELECT category_id FROM ag_posts_categories WHERE post_id = ?');
         $return = $req->execute(array($post_id));
 
         return $return;

@@ -6,7 +6,7 @@ try {
     if (isset($_SESSION['instagram_id'])) {
         if (isset($_GET['action'])) {
             // profile page
-            if ($_GET['action'] == 'profile' && $_GET['id'] == $_SESSION['instagram_id']) {
+            if ($_GET['action'] == 'profile' && $_GET['id'] == $_SESSION['id']) {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     influencerProfile($_GET['id']);
                 }
@@ -15,7 +15,7 @@ try {
                 }
             }
             // Update profile page
-            elseif ($_GET['action'] == 'updateProfile' && $_GET['id'] == $_SESSION['instagram_id']) {
+            elseif ($_GET['action'] == 'updateProfile' && $_GET['id'] == $_SESSION['id']) {
                 if (isset($_GET['id']) && $_GET['id'] > 0) {
                     updateInfluencerProfile($_GET['id'], $_POST['fullname'], $_POST['email'], $_POST['birthdate'], $_POST['town'], $_POST['category_id']);
                 }
@@ -31,7 +31,7 @@ try {
             }
         }
         else {
-            header('Location: influencers.php?action=profile&id=' . $_SESSION['instagram_id']);
+            header('Location: influencers.php?action=profile&id=' . $_SESSION['id']);
         }
     }
     else {

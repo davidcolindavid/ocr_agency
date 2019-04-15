@@ -24,11 +24,11 @@ class InfluencerManager extends Manager
         $req->execute([$insta_id, $username, $fullname, $followers, $bio, $profile_picture]);
     }
 
-    public function getInfluencerProfile($insta_id)
+    public function getInfluencerProfile($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT *, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM ag_influencers WHERE instagram_id = ?');
-        $req->execute(array($insta_id));
+        $req = $db->prepare('SELECT *, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM ag_influencers LEFT JOIN ag_influencers_categories ON ag_influencers.id = ag_influencers_categories.influencer_id WHERE id = 9');
+        $req->execute(array($influencer_id));
         $result = $req->fetch();
 
         return $result;
@@ -45,13 +45,13 @@ class InfluencerManager extends Manager
     public function getInfluencersProfilesCategory($category_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM ag_influencers LEFT JOIN ag_categories_relationship ON ag_influencers.id = ag_categories_relationship.influencer_id WHERE ag_categories_relationship.category_id = ?');
+        $req = $db->prepare('SELECT * FROM ag_influencers LEFT JOIN ag_influencers_categories ON ag_influencers.id = ag_influencers_categories.influencer_id WHERE ag_influencers_categories.category_id = ?');
         $req->execute(array($category_id));
 
         return $req;
     }
 
-    public function getTopInfluencersProfile($insta_id)
+    public function getTopInfluencersProfile($influencer_id)
     {
         $db = $this->dbConnect();
         $req = $db->query('SELECT *, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM ag_influencers ORDER BY followers DESC LIMIT 0, 5 ');
@@ -59,11 +59,11 @@ class InfluencerManager extends Manager
         return $req;
     }
 
-    public function influencerProfileToUpdate($insta_id, $fullname, $email, $birthdate, $town)
+    public function influencerProfileToUpdate($influencer_id, $fullname, $email, $birthdate, $town)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('UPDATE ag_influencers SET fullname = ?, email = ?, birthdate = ?, town = ? WHERE instagram_id = ?');
-        $affectedLines = $req->execute(array($fullname, $email, $birthdate, $town, $insta_id)); 
+        $req = $db->prepare('UPDATE ag_influencers SET fullname = ?, email = ?, birthdate = ?, town = ? WHERE id = ?');
+        $affectedLines = $req->execute(array($fullname, $email, $birthdate, $town, $influencer_id)); 
 
         return $affectedLines;
     }
@@ -79,7 +79,7 @@ class InfluencerManager extends Manager
     public function addCategoriesRelationship($influencer_id, $category_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('INSERT INTO ag_categories_relationship SET influencer_id = ?, category_id = ?');
+        $req = $db->prepare('INSERT INTO ag_influencers_categories SET influencer_id = ?, category_id = ?');
         $affectedLines = $req->execute(array($influencer_id, $category_id)); 
 
         return $affectedLines;
@@ -88,18 +88,27 @@ class InfluencerManager extends Manager
     public function deleteCategoriesRelationship($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('DELETE FROM ag_categories_relationship WHERE influencer_id = ?');
+        $req = $db->prepare('DELETE FROM ag_influencers_categories WHERE influencer_id = ?');
         $affectedLines = $req->execute(array($influencer_id)); 
 
         return $affectedLines;
     }
 
-    public function getCategoriesChecked($influencer_id)
+    public function checkCategories($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT category_id FROM ag_categories_relationship WHERE influencer_id = ?');
-        $return = $req->execute(array($influencer_id));
+        $req = $db->prepare('SELECT category_id FROM ag_influencers_categories WHERE influencer_id = ?');
+        $req->execute(array($influencer_id));
 
-        return $return;
+        return $req;
+    }
+
+    public function getPosts($category_id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('SELECT * FROM ag_posts LEFT JOIN ag_posts_categories ON ag_posts.id = ag_posts_categories.post_id WHERE ag_posts_categories.category_id = ?');
+        $req->execute(array($category_id));
+
+        return $req;
     }
 }
