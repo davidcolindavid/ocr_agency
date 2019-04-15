@@ -76,23 +76,15 @@ function influencerProfile($influencer_id)
     {
         $checked[]=$data['category_id'];
     }
-
-
-    /*
-    foreach ($categoriesChecked as $value){
-        echo $value['id'];
-    }
-    */
     
-    
-    /*
+    $posts = $influencerManager->getPosts($influencer['id']);
     while ($post = $posts->fetch()) 
     {
     ?>
         <div><?= $post['title']; ?></div>
     <?php
     }
-    */
+    
 
     require('view/frontend/influencerProfileView.php');    
 }
@@ -103,9 +95,6 @@ function updateInfluencerProfile($influencer_id, $fullname, $email, $birthdate, 
     $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
     $influencer = $influencerManager->getInfluencerProfile($influencer_id);
     $influencerManager->influencerProfileToUpdate($influencer_id, $fullname, $email, $birthdate, $town);
-    $categories = $influencerManager->getCategories();
-    $categoriesChecked = $influencerManager->checkCategories($influencer['id']);
-
     
     // delete data in table categories_relationship
     $influencerManager->deleteCategoriesRelationship($influencer['id']);
@@ -113,14 +102,8 @@ function updateInfluencerProfile($influencer_id, $fullname, $email, $birthdate, 
     foreach ($category_id as $category) {
         $influencerManager->addCategoriesRelationship($influencer['id'], $category);
     }
-
-    // "checked" attribute for the checkbox elt in influencerProfileView.php
-    while ($data = $categoriesChecked->fetch()) 
-    {
-        $checked[]=$data['category_id'];
-    }
     
-    require('view/frontend/influencerProfileView.php');
+    header('Location: influencers.php?action=profile&id=' . $influencer['id']);
 }
 
 function isAjax()
