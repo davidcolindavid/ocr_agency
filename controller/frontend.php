@@ -69,7 +69,30 @@ function influencerProfile($influencer_id)
     $influencer = $influencerManager->getInfluencerProfile($influencer_id);
 
     $categories = $influencerManager->getCategories();
-    $CategoriesChecked = $influencerManager->checkCategories($influencer['id']);
+    $categoriesChecked = $influencerManager->checkCategories($influencer['id']);
+
+    // "checked" attribute for the checkbox elt in influencerProfileView.php
+    while ($data = $categoriesChecked->fetch()) 
+    {
+        $checked[]=$data['category_id'];
+    }
+
+
+    /*
+    foreach ($categoriesChecked as $value){
+        echo $value['id'];
+    }
+    */
+    
+    
+    /*
+    while ($post = $posts->fetch()) 
+    {
+    ?>
+        <div><?= $post['title']; ?></div>
+    <?php
+    }
+    */
 
     require('view/frontend/influencerProfileView.php');    
 }
@@ -81,12 +104,20 @@ function updateInfluencerProfile($influencer_id, $fullname, $email, $birthdate, 
     $influencer = $influencerManager->getInfluencerProfile($influencer_id);
     $influencerManager->influencerProfileToUpdate($influencer_id, $fullname, $email, $birthdate, $town);
     $categories = $influencerManager->getCategories();
+    $categoriesChecked = $influencerManager->checkCategories($influencer['id']);
+
     
     // delete data in table categories_relationship
     $influencerManager->deleteCategoriesRelationship($influencer['id']);
     // add data in table categories_relationship
     foreach ($category_id as $category) {
         $influencerManager->addCategoriesRelationship($influencer['id'], $category);
+    }
+
+    // "checked" attribute for the checkbox elt in influencerProfileView.php
+    while ($data = $categoriesChecked->fetch()) 
+    {
+        $checked[]=$data['category_id'];
     }
     
     require('view/frontend/influencerProfileView.php');

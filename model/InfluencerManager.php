@@ -27,7 +27,7 @@ class InfluencerManager extends Manager
     public function getInfluencerProfile($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT *, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM ag_influencers LEFT JOIN ag_influencers_categories ON ag_influencers.id = ag_influencers_categories.influencer_id WHERE id = 9');
+        $req = $db->prepare('SELECT *, TIMESTAMPDIFF(YEAR, birthdate, CURDATE()) AS age FROM ag_influencers WHERE id = ?');
         $req->execute(array($influencer_id));
         $result = $req->fetch();
 

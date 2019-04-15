@@ -48,7 +48,7 @@
 				{
 				?>
 				<div class="col-lg-6">
-					<input type="checkbox" id="<?= $data['category'] ?>" name="category_id[]" value="<?= $data['id'] ?>">
+					<input type="checkbox" id="<?= $data['category'] ?>" name="category_id[]" value="<?= $data['id'] ?>" <?php if (in_array($data['id'], $checked)) echo "checked" ?>>
 					<label for="<?= $data['category'] ?>">#<?= $data['category'] ?></label>
 				</div>
 				<?php
