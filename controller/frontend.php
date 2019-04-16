@@ -8,6 +8,17 @@ require_once('model/Manager.php');
 require_once('model/InfluencerManager.php');
 
 
+// view/frontend/indexView.php
+
+function listInfluencers()
+{   
+    // Redirect to the login instagram page
+    require('view/frontend/indexView.php');
+}
+
+
+// view/frontend/influencerProfileView.php
+
 function getLoginURL()
 {   
     // Get the API instagram settings
@@ -77,7 +88,11 @@ function influencerProfile($influencer_id)
         $checked[]=$data['category_id'];
     }
     
-    $posts = $influencerManager->getPosts($influencer['id']);
+    // get posts
+    foreach ($checked as $category) {
+        $posts = $influencerManager->getPosts($category);
+    }
+    
     while ($post = $posts->fetch()) 
     {
     ?>
