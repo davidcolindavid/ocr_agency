@@ -88,19 +88,9 @@ function influencerProfile($influencer_id)
         $checked[]=$data['category_id'];
     }
     
-    // get posts
-    foreach ($checked as $category) {
-        $posts = $influencerManager->getPosts($category);
-    }
+    // Get posts according to the categories checked by the member
+    $posts = $influencerManager->getPosts($influencer_id);
     
-    while ($post = $posts->fetch()) 
-    {
-    ?>
-        <div><?= $post['title']; ?></div>
-    <?php
-    }
-    
-
     require('view/frontend/influencerProfileView.php');    
 }
 

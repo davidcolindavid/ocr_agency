@@ -103,12 +103,28 @@ class InfluencerManager extends Manager
         return $req;
     }
 
-    public function getPosts($category_id)
+    public function getPosts($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT * FROM ag_posts LEFT JOIN ag_posts_categories ON ag_posts.id = ag_posts_categories.post_id WHERE ag_posts_categories.category_id = ?');
-        $req->execute(array($category_id));
+        $req = $db->prepare('SELECT *, DATE_FORMAT(creation_date, \'%d %M %Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(date_event, \'%d %M %Y à %Hh%i\') AS date_event 
+        FROM ag_categories
+        LEFT JOIN ag_posts_categories ON ag_categories.id = ag_posts_categories.category_id 
+        LEFT JOIN ag_posts ON ag_posts_categories.post_id = ag_posts.id 
+        LEFT JOIN ag_influencers_categories ON ag_categories.id = ag_influencers_categories.category_id 
+        WHERE ag_influencers_categories.influencer_id = ?
+        ORDER BY creation_date DESC');
+        $req->execute(array($influencer_id));
 
         return $req;
     }
 }
+
+//SELECT * FROM ag_posts LEFT JOIN ag_posts_categories ON ag_posts.id = ag_posts_categories.post_id WHERE ag_posts_categories.category_id = ?
+
+/*
+SELECT * FROM ag_categories
+LEFT JOIN ag_posts_categories ON ag_categories.id = ag_posts_categories.category_id 
+LEFT JOIN ag_posts ON ag_posts_categories.post_id = ag_posts.id 
+LEFT JOIN ag_influencers_categories ON ag_categories.id = ag_influencers_categories.category_id 
+WHERE ag_posts_categories.category_id = ? AND ag_influencers_categories.influencer_id = ?
+*/

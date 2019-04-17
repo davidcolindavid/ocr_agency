@@ -60,23 +60,18 @@
 			</form>
 			
 			<!-- posts list -->
-			<?php/*
-            while ($post = $posts->fetch())
-            {
+			<?php
+			while ($post = $posts->fetch()) 
+			{
 			?>
-                <div class="title"><?= $post['title'] ?></div>
+				<div class="title"><?= $post['title'] ?></div>
 				<div class="post_date">Posté le <?= $post['creation_date_fr'] ?></div>
-				<div class="post_content"><?= $post['content'] ?></div>
+				<div class="post_content"><? //$post['content'] ?></div>
 				<div class="date"><i class="far fa-clock"></i><?= $post['date_event'] ?></div>
                 <div class="place"><i class="fas fa-map-marker-alt"></i><?= $post['place'] ?> - <?= $post['address_event'] ?></div>
-            <?php
-            }
-            $posts->closeCursor();
-			*/?> 
-			
-
-
-
+			<?php
+			}
+			?> 		
 		</div>
 
 		<script src="https://code.jquery.com/jquery.min.js" ></script>
