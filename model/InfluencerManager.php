@@ -111,7 +111,7 @@ class InfluencerManager extends Manager
         LEFT JOIN ag_posts_categories ON ag_categories.id = ag_posts_categories.category_id 
         LEFT JOIN ag_posts ON ag_posts_categories.post_id = ag_posts.id 
         LEFT JOIN ag_influencers_categories ON ag_categories.id = ag_influencers_categories.category_id 
-        WHERE ag_influencers_categories.influencer_id = ?
+        WHERE ag_influencers_categories.influencer_id = ? AND ag_posts_categories.post_id != 0
         ORDER BY creation_date DESC');
         $req->execute(array($influencer_id));
 
