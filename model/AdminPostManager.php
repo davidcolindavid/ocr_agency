@@ -121,11 +121,12 @@ class AdminPostManager extends Manager
         return $affectedLines;
     }
 
-    public function getCategoriesChecked($post_id)
+    public function checkCategories($post_id)
     {
         $db = $this->dbConnect();
         $req = $db->prepare('SELECT category_id FROM ag_posts_categories WHERE post_id = ?');
-        $return = $req->execute(array($post_id));
+        $req->execute(array($post_id));
+        $return = $req->fetch();
 
         return $return;
     }

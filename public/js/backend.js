@@ -107,6 +107,14 @@ $('#posts_container').on('click', '.edit_control', function(e) {
             // add ID to find the title to update
             $('#posts_container').find("#postToEdit").removeAttr('id', 'postToEdit');
             editElt.parents('.post').attr('id', 'postToEdit');
+
+            let tabRadio = new Array()
+            tabRadio = $('input:radio')
+            for (var i = 0; i < tabRadio.length; i++) {
+                if ($(tabRadio[i]).val() == data[6]) {
+                    $(tabRadio[i]).prop("checked", "checked");
+                }
+            }
         },
     })
 });

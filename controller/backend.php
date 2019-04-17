@@ -101,7 +101,12 @@ function editPost()
     $posts = $postManager->getPosts();
     $form = $postManager->postToEdit($_GET['id']);
     $categories = $postManager->getCategories();
+    // "checked" attribute for the checkbox elt in adminView.php
+    $categoryChecked = $postManager->checkCategories($_GET['id']);
 
+    $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
+    $topInfluencers = $influencerManager->getTopInfluencersProfile();
+    
     // editor and fields init
     $formTitle = $form['title'];
     $formPlace = $form['place'];
@@ -111,7 +116,7 @@ function editPost()
     $formAction = "admin.php?action=updatePost&id=" . $form['id'];
 
     if (isAjax()) { 
-        $array = [$formTitle, $formPlace, $formAddress, $formDate, $formContent, $formAction];
+        $array = [$formTitle, $formPlace, $formAddress, $formDate, $formContent, $formAction, $categoryChecked['category_id']];
         header('Content-type: application/json');
         echo json_encode($array);
     }

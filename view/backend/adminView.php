@@ -31,7 +31,7 @@
 				{
 				?>
 				<div class="col-lg-6">
-					<input type="checkbox" id="<?= $data['category'] ?>" name="category_id[]" value="<?= $data['id'] ?>">
+					<input type="radio" id="<?= $data['category'] ?>" name="category_id[]" value="<?= $data['id'] ?>" <?php if ($categoryChecked['category_id'] == $data['id']) echo "checked" ?>>
 					<label for="<?= $data['category'] ?>"><?= $data['category'] ?></label>
 				</div>
 				<?php
