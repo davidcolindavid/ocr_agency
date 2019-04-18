@@ -23,6 +23,22 @@ try {
                     throw new Exception('Aucun identifiant de profile envoyé');
                 }
             }
+            elseif ($_GET['action'] == 'requestEvent') {
+                if (isset($_GET['influencerId']) && $_GET['influencerId'] > 0 && isset($_GET['postId']) && $_GET['postId'] > 0) {
+                    requestEvent($_GET['influencerId'], $_GET['postId']);
+                }
+                else {
+                    throw new Exception('Aucun identifiant de profile envoyé');
+                }
+            }
+            elseif ($_GET['action'] == 'deleteRequestEvent') {
+                if (isset($_GET['influencerId']) && $_GET['influencerId'] > 0 && isset($_GET['postId']) && $_GET['postId'] > 0) {
+                    deleteRequestEvent($_GET['influencerId'], $_GET['postId']);
+                }
+                else {
+                    throw new Exception('Aucun identifiant de profile envoyé');
+                }
+            }
             elseif ($_GET['action'] == 'logout') {
                 logout();
             }

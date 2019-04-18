@@ -106,16 +106,37 @@ class InfluencerManager extends Manager
     public function getPosts($influencer_id)
     {
         $db = $this->dbConnect();
-        $req = $db->prepare('SELECT *, DATE_FORMAT(creation_date, \'%d %M %Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(date_event, \'%d %M %Y à %Hh%i\') AS date_event 
+        $req = $db->prepare('SELECT *, ag_influencers_posts.post_id AS post_event_requested, ag_influencers_posts.influencer_id AS influencer_event_requested,
+        ag_influencers_categories.influencer_id AS influencer_id, ag_posts_categories.post_id AS post_id,
+        DATE_FORMAT(creation_date, \'%d %M %Y à %Hh%i\') AS creation_date_fr, DATE_FORMAT(date_event, \'%d %M %Y à %Hh%i\') AS date_event 
         FROM ag_categories
         LEFT JOIN ag_posts_categories ON ag_categories.id = ag_posts_categories.category_id 
         LEFT JOIN ag_posts ON ag_posts_categories.post_id = ag_posts.id 
-        LEFT JOIN ag_influencers_categories ON ag_categories.id = ag_influencers_categories.category_id 
-        WHERE ag_influencers_categories.influencer_id = ? AND ag_posts_categories.post_id != 0
+        LEFT JOIN ag_influencers_categories ON ag_categories.id = ag_influencers_categories.category_id
+        LEFT JOIN ag_influencers_posts ON ag_posts.id = ag_influencers_posts.post_id
+        WHERE ag_influencers_categories.influencer_id = ? AND ag_posts_categories.category_id != 0
         ORDER BY creation_date DESC');
         $req->execute(array($influencer_id));
 
         return $req;
+    }
+
+    public function addRequestEvent($influencer_id, $post_id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('INSERT INTO ag_influencers_posts SET influencer_id = ?, post_id = ?');
+        $affectedLines = $req->execute(array($influencer_id, $post_id)); 
+
+        return $affectedLines;
+    }
+
+    public function requestEventToDelete($influencer_id, $post_id)
+    {
+        $db = $this->dbConnect();
+        $req = $db->prepare('DELETE FROM ag_influencers_posts WHERE influencer_id = ? AND post_id = ?');
+        $affectedLines = $req->execute(array($influencer_id, $post_id)); 
+
+        return $affectedLines;
     }
 }
 

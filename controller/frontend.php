@@ -111,6 +111,26 @@ function updateInfluencerProfile($influencer_id, $fullname, $email, $birthdate, 
     header('Location: influencers.php?action=profile&id=' . $influencer['id']);
 }
 
+function requestEvent($influencer_id, $post_id)
+{           
+    // Get Profile details
+    $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
+    $influencer = $influencerManager->getInfluencerProfile($influencer_id);
+    $request = $influencerManager->addRequestEvent($influencer_id, $post_id); 
+    
+    header('Location: influencers.php?action=profile&id=' . $influencer['id']);
+}
+
+function deleteRequestEvent($influencer_id, $post_id)
+{           
+    // Get Profile details
+    $influencerManager = new \DipsAgency\Site\Model\InfluencerManager();
+    $influencer = $influencerManager->getInfluencerProfile($influencer_id);
+    $request = $influencerManager->requestEventToDelete($influencer_id, $post_id); 
+    
+    header('Location: influencers.php?action=profile&id=' . $influencer['id']);
+}
+
 function isAjax()
 {
     return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';

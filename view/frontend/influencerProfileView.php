@@ -64,14 +64,31 @@
 			while ($post = $posts->fetch()) 
 			{
 			?>
+				<br />
 				<div class="title"><?= $post['title'] ?></div>
 				<div class="post_date">Posté le <?= $post['creation_date_fr'] ?></div>
 				<div class="post_content"><? //$post['content'] ?></div>
 				<div class="date"><i class="far fa-clock"></i><?= $post['date_event'] ?></div>
-                <div class="place"><i class="fas fa-map-marker-alt"></i><?= $post['place'] ?> - <?= $post['address_event'] ?></div>
-			<?php
+				<div class="place"><i class="fas fa-map-marker-alt"></i><?= $post['place'] ?> - <?= $post['address_event'] ?></div>
+				<?php
+				if (empty($post['post_event_requested']) && empty($post['influencer_event_requested'])) 
+				{
+				?>
+				<form action="influencers.php?action=requestEvent&amp;influencerId=<?= $post['influencer_id'] ?>&amp;postId=<?= $post['post_id'] ?>" method="post">
+					<button>Demander à participer</button>
+				</form>
+				<?php
+				}
+				else {
+				?>
+					<form action="influencers.php?action=deleteRequestEvent&amp;influencerId=<?= $post['influencer_id'] ?>&amp;postId=<?= $post['post_id'] ?>" method="post">
+						<button>Annuler la demande</button>
+					</form>
+				<?php
+				}
 			}
-			?> 		
+			?>
+			
 		</div>
 
 		<script src="https://code.jquery.com/jquery.min.js" ></script>
